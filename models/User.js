@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
-const { SALT_ROUNDS } = require('../config/config')
+const { SALT_ROUNDS } = require('../config/config');
 
 const userScheme = new mongoose.Schema({
     username: {
@@ -14,6 +14,15 @@ const userScheme = new mongoose.Schema({
         required: true,
         minLength: 5
     },
+    amount: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    expenses: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Expense'
+    }]
 })
 
 

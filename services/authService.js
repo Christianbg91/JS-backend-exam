@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { SECRET } = require('../config/config')
 
-const register = (username, password) => {
-    let user = new User({ username, password });
+const register = (username, password, amount) => {
+    let user = new User({ username, password, amount: Number(amount) });
     return user.save();
 };
 
@@ -25,9 +25,17 @@ const login = async (username, password) => {
 
 }
 
+const addAmount = (id, amount) => {
+    return User.findOneAndUpdate({_id: id}, {$inc: {'amount': amount}})
+}
 
+const getUser = (id) => {
+    return User.findById(id).lean()
+}
 
 module.exports = {
     register,
-    login
+    login,
+    addAmount,
+    getUser
 }

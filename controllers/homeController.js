@@ -1,8 +1,11 @@
 const router = require('express').Router();
 
 router.get('/', function (req, res) {
-    console.log(req.locals)
-    res.render('index');
+    if (!req.user){
+        return res.render('home');
+    }else{
+        return res.redirect('/expenses')
+    }
 });
 
 

@@ -1,48 +1,35 @@
-<main>
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <h1 class="display-4">Video Tutorials</h1>
-            <p class="lead">Start Self-Study Today: It'll Change Your Life</p>
-        </div>
-    </div>
-
+<section class="actions">
+    <form method="POST">
+        <h2>Salary time? Refill your account amount.</h2>
+        <input type="text" id="refill-amount" name="amount">
+        <button type="submit">Refill</button>
+    </form>
     <div>
-        <h1 class="text-center">Top Courses</h1>
-        <div class="container mt-3">
-            <div class="row d-flex justify-content-center">
-
-                <div class="card-deck">
-                    <div class="card mb-4">
-                        <img class="card-img-top"
-                            src="https://blog.cyberpanel.net/wp-content/uploads/2019/03/express-js-cyberpanel.jpeg"
-                            alt="Card image cap" width="400">
-                        <div class="card-body">
-                            <h4 class="card-title">ExpressJS</h4>
-                        </div>
-                    </div>
-
-                    <div class="card mb-4">
-                        <img class="card-img-top"
-                            src="https://colorlib.com/wp/wp-content/uploads/sites/2/angular-logo.png"
-                            alt="Card image cap" width="400">
-                        <div class="card-body">
-                            <h4 class="card-title">Angular</h4>
-                        </div>
-                    </div>
-
-                    <div class="card mb-4">
-                        <img class="card-img-top"
-                            src="http://blog.addthiscdn.com/wp-content/uploads/2014/11/addthis-react-flux-javascript-scaling.png"
-                            alt="Card image cap" width="400">
-                        <div class="card-body">
-                            <h4 class="card-title">React</h4>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <h4 class="text-center">No courses...</h4>
-
-        </div>
+        <h2>New expense comming up?</h2>
+        <a href="/expenses/create">Add it now</a>
     </div>
-</main>
+</section>
+
+<hr class="separator">
+
+<table class="expenses">
+    <thead>
+        <tr>
+            <th>Merchant</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Description</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        {{#each expenses}}
+        {{>expense isAuth=../isAuth}}
+        {{/each}}
+
+    </tbody>
+</table>
+
+{{#if noExpenses}}
+<h1 class="no-expenses">No expenses founded so far.. <span>GOOD JOB!</span></h1>
+{{/if}}

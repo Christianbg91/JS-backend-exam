@@ -4,9 +4,8 @@ const { COOKIE_NAME } = require('../config/config')
 
 module.exports = function (req, res, next) {
     let token = req.cookies[COOKIE_NAME];
-
     if (!token){
-        return res.status(401).render('index', {message: 'You are not authorized'})
+        return res.status(401).redirect('/auth/login');
     }
     jwt.verify(token, SECRET, function(err, decoded){
         if (err){
