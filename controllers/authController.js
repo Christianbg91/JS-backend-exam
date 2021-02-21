@@ -21,7 +21,7 @@ router.post('/register', (req, res, next) => {
     if (!password.match(/^[A-Za-z0-9]{4,}$/)) {
         errors.push('Password must be at least 4 characters long and consist only of english letters and digits')
     }
-    if (!amount.match(/^\d*.?\d*$/) || (Number(amount) < 0)) {
+    if (!amount.match(/^\d*[.]{0,1}\d*$/) || (Number(amount) < 0)) {
         errors.push('Amount must be a non-negative number')
     }
     console.log(errors)
@@ -52,7 +52,13 @@ router.post('/login', (req, res, next) => {
             res.cookie(COOKIE_NAME, token, { httpOnly: true });
             res.redirect('/expenses');
         })
-        .catch(next)
+        .catch(error => {
+            if (error.status == 404){
+                console.log(error)
+                return res.render('login', {error: error.message})
+            }
+            next()
+        })
 })
 
 router.get('/logout', (req, res) => {

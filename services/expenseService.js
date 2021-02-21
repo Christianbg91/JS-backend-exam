@@ -7,11 +7,11 @@ const create = (data) => {
 }
 
 const getAll = (userId) => {
-    return Expense.find({user: userId}).lean()
+    return Expense.find({ user: userId }).lean();
 }
 
 const getOne = (expenseId, userId) => {
-    return Expense.findOne({_id: expenseId, user: userId}).lean()
+    return Expense.findOne({ _id: expenseId, user: userId }).lean()
 }
 
 const deleteOne = (expenseId) => {
@@ -19,7 +19,7 @@ const deleteOne = (expenseId) => {
 }
 
 const getExpensesSum = (userId) => {
-    return Expense.find({user: userId})
+    return Expense.find({ user: userId })
         .lean()
         .then((expenses) => {
             let sum = 0;
@@ -31,7 +31,7 @@ const getExpensesSum = (userId) => {
 }
 
 const getUniqueMerches = (userId) => {
-    return Expense.find({user: userId}).distinct('merchant')
+    return Expense.find({ user: userId }).distinct('merchant')
 }
 
 module.exports = {

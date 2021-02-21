@@ -9,7 +9,7 @@ router.route('/')
             .then(expenses => {
                 let noExpenses = false;
                 if (!expenses.length) noExpenses = true;
-
+                expenses.map(x => x.total = x.total.toFixed(2))
                 res.render('index', { expenses, noExpenses });
             })
             .catch(next)
@@ -17,7 +17,7 @@ router.route('/')
     .post((req, res, next) => {
         let amount = req.body.amount;
         let errors = []
-        if (!amount.match(/^\d*.?\d*$/) || (Number(amount) < 0)) {
+        if (!amount.match(/^\d*[.]{0,1}\d*$/) || (Number(amount) < 0)) {
             errors.push('Amount must be a non-negative number')
         }
         if (errors.length) {
@@ -80,6 +80,7 @@ router.get('/:expenseId/report', (req, res, next) => {
             if (!expense) {
                 return res.render('404', { message: `Expense is not found` })
             }
+            expense.total = expense.total.toFixed(2)
             res.render('report', { expense })
         })
         .catch(next)
@@ -112,8 +113,9 @@ router.get('/account', (req, res, next) => {
     ])
         .then((values) => {
             let [total, merchants, user] = values;
+            total = total.toFixed(2)
             merchants = merchants.length
-            amount = user.amount
+            amount = user.amount.toFixed(2)
             res.render('account-info', { total, merchants, amount })
         })
         .catch(next)
